@@ -8,14 +8,16 @@ phases:
       - echo "Installing dependencies..."
       - npm install
       - npm install -g @angular/cli@18.0.0
+
   build:
     commands:
       - echo "Building Angular Project"
       - ng build --configuration production
+
   post_build:
     commands:
-      - echo "Checking built files in dist/aws-hosting/"
-      - ls -la dist/
-      - ls -la dist/aws-hosting/
-      - echo "Syncing to S3 bucket..."
-      - aws s3 sync dist/aws-hosting/ s3://sw-dev-angular-app --delete --exact-timestamps --debug
+      - echo "Uploading only the browser build output..."
+      - aws s3 sync dist/aws-hosting/browser/ s3://sw-dev-angular-app --delete
+      - echo "Invalidating CloudFront..."
+      - aws cloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths "/*"
+
