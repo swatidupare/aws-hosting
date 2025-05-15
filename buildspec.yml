@@ -1,10 +1,11 @@
 version: 0.2
-phases :
-  install: 
+
+phases:
+  install:
     runtime-versions:
       nodejs: 20.15.1
     commands:
-      - echo "Installing dpendencies.."
+      - echo "Installing dependencies..."
       - npm install
       - npm install -g @angular/cli@18.0.0
   build:
@@ -13,5 +14,8 @@ phases :
       - ng build --configuration production
   post_build:
     commands:
-      - echo "Updating files into S3 bucket..."
-      - aws s3 sync dist/aws-hosting/ s3://sw-dev-angular-app --delete
+      - echo "Checking built files in dist/aws-hosting/"
+      - ls -la dist/
+      - ls -la dist/aws-hosting/
+      - echo "Syncing to S3 bucket..."
+      - aws s3 sync dist/aws-hosting/ s3://sw-dev-angular-app --delete --exact-timestamps --debug
