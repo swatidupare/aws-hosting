@@ -19,5 +19,5 @@ phases:
       - echo "Uploading only the browser build output..."
       - aws s3 sync dist/aws-hosting/browser/ s3://sw-dev-angular-app --delete
       - echo "Invalidating CloudFront..."
-      - aws cloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths "/*"
+      - aws cloudfront create-invalidation --distribution-id E29IZD9OZIJ28M --paths "/*"
 
