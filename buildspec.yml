@@ -7,11 +7,11 @@ phases :
       - echo "Installing dpendencies.."
       - npm install
       - npm install -g @angular/cli@18.0.0
-    build:
-      commands:
-        - echo "Building Angular Project"
-        - ng build --prod
-    post-builds:
-      commands:
-        - echo "Updating files into S3 bucket..."
-        - aws s3 sync dist/aws-hosting/ s3://sw-dev-angular-app --delete
+  build:
+    commands:
+      - echo "Building Angular Project"
+      - ng build --prod
+  post-builds:
+    commands:
+      - echo "Updating files into S3 bucket..."
+      - aws s3 sync dist/aws-hosting/ s3://sw-dev-angular-app --delete
